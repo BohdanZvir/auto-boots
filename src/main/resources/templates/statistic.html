@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'Hello, stat!'" />
+<!--<p th:text="${stat}" />-->
+<p th:text="'total :: ' + ${stat.total}" />
+<p th:text="'Arithmetic :: ' + ${stat.arithmeticMean}" />
+prices
+<table>
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th th:text="Name">Name</th>-->
+        <!--<th th:text="Value">Value</th>-->
+        <!--&lt;!&ndash;<th th:text="#{msgs.headers.price}">Price</th>&ndash;&gt;-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <tbody>
+    <tr th:each="entry : ${table}">
+
+        <!--<td th:text="${entry.key}"></td>-->
+        <!--<td th:text="${entry.value}"></td>-->
+        <td>
+            <!--<a th:text="${prod.value}" th:href="@{/car_models(mark=${prod.value})}"></a>-->
+            <a th:text="${entry.key}" th:href="@{{url}/{mark}(url=${url},mark=${entry.value})}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<a th:href="@{/car_marks}">car_marks</a>-->
+
+</body>
+</html>
