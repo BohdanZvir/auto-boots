@@ -1,9 +1,7 @@
 package hello.ria.communicator;
 
-import java.net.URI;
-
 /**
- * Created by Bohdan on 04/01/2016.
+ * Created by bohdan on 04/01/2016.
  */
 public interface UrlBuilder {
 

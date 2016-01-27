@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * Created by Bohdan on 04/01/2016.
+ * Created by bohdan on 04/01/2016.
  */
 @ToString
 @NoArgsConstructor
@@ -16,6 +16,7 @@ import java.util.Map;
 public class UrlBuilderImpl implements UrlBuilder, Transfer {
 
     private static final String AVERAGE = "/average?marka_id=%d&model_id=%d";
+
     public String getCategories() {
         return buildUrl(CATEGORIES);
     }
@@ -42,7 +43,7 @@ public class UrlBuilderImpl implements UrlBuilder, Transfer {
 //    http://api.auto.ria.com/average?marka_id=24&model_id=239&gear_id=1&gear_id=2&yers=2011&drive_id=2&damage=0&custom=0
 
     public String buildAverageArgs(Map<String, Integer> map) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (Map.Entry<String, Integer> entry: map.entrySet()) {
             buffer.append("&")
                     .append(entry.getKey())
@@ -52,7 +53,7 @@ public class UrlBuilderImpl implements UrlBuilder, Transfer {
     }
 
     public String buildUrl(Object... args){
-        StringBuffer buffer = new StringBuffer(BASE_URL);
+        StringBuilder buffer = new StringBuilder(BASE_URL);
         for (Object arg : args) {
             buffer.append("/").append(arg);
         }

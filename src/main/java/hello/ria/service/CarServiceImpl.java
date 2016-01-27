@@ -16,6 +16,7 @@ import java.util.*;
 public class CarServiceImpl implements CarService, Transfer {
 
     private static List<Payload> payloads = new LinkedList<>();
+
     @Autowired
     private UrlBuilder urlBuilder;
     @Autowired
@@ -31,11 +32,8 @@ public class CarServiceImpl implements CarService, Transfer {
 
     @Override
     public Map<String, Integer> getMarksMap() {
-        if (payloads.isEmpty()) {
-            getPayloads();
-        }
         Map<String, Integer> map = new TreeMap<>();
-        for (Payload payload : payloads) {
+        for (Payload payload : getPayloads()) {
             map.put(payload.getName(), payload.getValue());
         }
         return map;

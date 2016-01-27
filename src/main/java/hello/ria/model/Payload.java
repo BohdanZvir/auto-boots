@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by Bohdan on 04/01/2016.
+ * Created by bohdan on 04/01/2016.
  */
 @Getter
 @Setter
