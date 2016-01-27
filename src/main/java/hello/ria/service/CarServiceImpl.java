@@ -16,6 +16,7 @@ import java.util.*;
 public class CarServiceImpl implements CarService, Transfer {
 
     private static List<Payload> CAR_MARKS = new LinkedList<>();
+    private static Map<Integer, String> CAR_MODELS = new TreeMap<>();
 
     @Autowired
     private UrlBuilder urlBuilder;
@@ -25,7 +26,7 @@ public class CarServiceImpl implements CarService, Transfer {
     @Override
     public Map<String, Object> getModelsMap() {
         Map<String, Object> model = new HashMap<>();
-        model.put(PAYLOADS, getCarMarks());
+        model.put(PAYLOADS, getMarksCache());
         model.put(URL_PART, "/car/mark");
         return model;
     }
@@ -33,7 +34,7 @@ public class CarServiceImpl implements CarService, Transfer {
     @Override
     public Map<String, Integer> getMarksMap() {
         Map<String, Integer> map = new TreeMap<>();
-        for (Payload payload : getCarMarks()) {
+        for (Payload payload : getMarksCache()) {
             map.put(payload.getName(), payload.getValue());
         }
         return map;
@@ -52,7 +53,24 @@ public class CarServiceImpl implements CarService, Transfer {
         return model;
     }
 
-    private List<Payload> getCarMarks() {
+    @Override
+    public Map<String, Object> getCarModels(int id) {
+        Map<String, Object> model = new HashMap<>();
+        model.put(PAYLOADS, getModelsCache(id));
+        model.put(URL_PART, "/car/mark/" + id);
+        return model;
+    }
+
+    private Payload[] getModelsCache(int id) {
+        String url = urlBuilder.getModels(DEFAULT_CATEGORY, id);
+        Payload[] payloads = restTemplate.getForObject(url, Payload[].class);
+        for (Payload payload : payloads) {
+            CAR_MODELS.put(payload.getValue(), payload.getName());
+        }
+        return payloads;
+    }
+
+    private List<Payload> getMarksCache() {
         if (CAR_MARKS.isEmpty()) {
             String url = urlBuilder.getMarks(DEFAULT_CATEGORY);
             CAR_MARKS.addAll(Arrays.asList(restTemplate.getForObject(url, Payload[].class)));

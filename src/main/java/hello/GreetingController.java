@@ -41,11 +41,7 @@ public class GreetingController implements Transfer {
 
     @RequestMapping("/car/mark/{id}")
     public String carModels(@PathVariable("id") int id, Model model){
-        String url = urlBuilder.getModels(DEFAULT_CATEGORY, id);
-        Payload[] payloads = restTemplate.getForObject(url, Payload[].class);
-        model.
-                addAttribute(PAYLOADS, payloads).
-                addAttribute(URL_PART, "/car/mark/" + id);
+        model.addAllAttributes(carService.getCarModels(id));
         return PAYLD_PAGE;
     }
 
