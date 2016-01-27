@@ -15,7 +15,7 @@ public @Data class Payload {
     }
 
     private String name;
-    private int value;
+    private Integer value;
 
     @Override
     public String toString() {
@@ -28,7 +28,11 @@ public @Data class Payload {
         return name;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 }

@@ -24,21 +24,17 @@ public class GreetingController implements Transfer {
 
     @RequestMapping("/")
     public String index(Model model) {
-        return carMarks(DEFAULT_CATEGORY, model);
+        return carMarks(model);
     }
 
-    @RequestMapping("/car/categories")
+    @RequestMapping("/categories")
     public String greeting(Model model) {
-        Payload[] payloads = restTemplate.getForObject(urlBuilder.getCategories(), Payload[].class);
-        model.
-                addAttribute(PAYLOADS, payloads).
-                addAttribute(URL_PART, "/car/mark");
+        model.addAllAttributes(carService.getCategories());
         return PAYLD_PAGE;
     }
 
     @RequestMapping("/car/mark")
-    public String carMarks(@RequestParam(value = "id", defaultValue = "" + DEFAULT_CATEGORY) int id,
-                           Model model){
+    public String carMarks(Model model){
         model.addAllAttributes(carService.getModelsMap());
         return PAYLD_PAGE;
     }

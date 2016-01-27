@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class CarServiceImpl implements CarService, Transfer {
 
-    private static List<Payload> payloads = new LinkedList<>();
+    private static List<Payload> CAR_MARKS = new LinkedList<>();
 
     @Autowired
     private UrlBuilder urlBuilder;
@@ -25,7 +25,7 @@ public class CarServiceImpl implements CarService, Transfer {
     @Override
     public Map<String, Object> getModelsMap() {
         Map<String, Object> model = new HashMap<>();
-        model.put(PAYLOADS, getPayloads());
+        model.put(PAYLOADS, getCarMarks());
         model.put(URL_PART, "/car/mark");
         return model;
     }
@@ -33,17 +33,30 @@ public class CarServiceImpl implements CarService, Transfer {
     @Override
     public Map<String, Integer> getMarksMap() {
         Map<String, Integer> map = new TreeMap<>();
-        for (Payload payload : getPayloads()) {
+        for (Payload payload : getCarMarks()) {
             map.put(payload.getName(), payload.getValue());
         }
         return map;
     }
 
-    private List<Payload> getPayloads() {
-        if (payloads.isEmpty()) {
-            String url = urlBuilder.getMarks(DEFAULT_CATEGORY);
-            payloads.addAll(Arrays.asList(restTemplate.getForObject(url, Payload[].class)));
+    @Override
+    public Map<String, Object> getCategories() {
+        Map<String, Object> model = new HashMap<>();
+        String url = urlBuilder.getCategories();
+        Payload[] categories = restTemplate.getForObject(url, Payload[].class);
+        for (Payload category : categories) {
+            category.setValue(null);
         }
-        return payloads;
+        model.put(PAYLOADS, categories);
+        model.put(URL_PART, "/car/mark");
+        return model;
+    }
+
+    private List<Payload> getCarMarks() {
+        if (CAR_MARKS.isEmpty()) {
+            String url = urlBuilder.getMarks(DEFAULT_CATEGORY);
+            CAR_MARKS.addAll(Arrays.asList(restTemplate.getForObject(url, Payload[].class)));
+        }
+        return CAR_MARKS;
     }
 }

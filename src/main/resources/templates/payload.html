@@ -19,8 +19,8 @@
     <tr th:each="prod : ${payloads}">
         <td th:text="${prod.name}"></td>
         <td>
-            <!--<a th:text="${prod.value}" th:href="@{/car_models(mark=${prod.value})}"></a>-->
-            <a th:text="${prod.value}" th:href="@{{url}/{mark}(url=${url},mark=${prod.value})}"></a>
+            <a th:text="(${prod.value} != null ? ${prod.value} : 'null')"
+               th:href="@{{url}/{mark}(url=${url},mark=(${prod.value} != null ? ${prod.value} : ''))}"/>
         </td>
     </tr>
     </tbody>
@@ -28,7 +28,7 @@
 <br/>
 <p th:text="${json}" />
 
-<a th:href="@{/car_marks}">car_marks</a>
+<a th:href="@{/car/mark/}">car_marks</a>
 
 </body>
 </html>

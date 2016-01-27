@@ -10,4 +10,6 @@ public interface CarService {
     Map<String, Object> getModelsMap();
 
     Map<String, Integer> getMarksMap();
+
+    Map<String, Object> getCategories();
 }
