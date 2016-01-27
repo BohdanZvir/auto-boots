@@ -21,17 +21,14 @@ prices
     <tbody>
     <tr th:each="entry : ${table}">
 
-        <!--<td th:text="${entry.key}"></td>-->
-        <!--<td th:text="${entry.value}"></td>-->
         <td>
-            <!--<a th:text="${prod.value}" th:href="@{/car_models(mark=${prod.value})}"></a>-->
-            <a th:text="${entry.key}" th:href="@{{url}/{mark}(url=${url},mark=${entry.value})}"></a>
+            <a th:text="${entry.key}" th:href="${entry.value}"></a>
         </td>
     </tr>
     </tbody>
 </table>
 
-<!--<a th:href="@{/car_marks}">car_marks</a>-->
+<a th:href="@{/car/mark/}">car_marks</a>
 
 </body>
 </html>

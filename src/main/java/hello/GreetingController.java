@@ -49,11 +49,7 @@ public class GreetingController implements Transfer {
     public String carStat(@PathVariable("mark_id") int markId,
                           @PathVariable("model_id") int modelId,
                           Model model){
-        String url = urlBuilder.getAvarege(DEFAULT_CATEGORY, markId, modelId);
-        Statistic statistic = restTemplate.getForObject(url, Statistic.class);
-        model.
-                addAttribute(STATISTIC, statistic).
-                addAttribute(TABLE, statistic.buildMap());
+        model.addAllAttributes(carService.getModelStatistic(markId, modelId));
         return STAT_PAGE;
     }
 

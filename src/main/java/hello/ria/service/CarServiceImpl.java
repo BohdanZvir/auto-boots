@@ -3,6 +3,7 @@ package hello.ria.service;
 import hello.Transfer;
 import hello.ria.communicator.UrlBuilder;
 import hello.ria.model.Payload;
+import hello.ria.model.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,11 +32,10 @@ public class CarServiceImpl implements CarService, Transfer {
         return model;
     }
 
-    @Override
-    public Map<String, Integer> getMarksMap() {
-        Map<String, Integer> map = new TreeMap<>();
+    public Map<Integer, String> getMarksMap() {
+        Map<Integer, String> map = new TreeMap<>();
         for (Payload payload : getMarksCache()) {
-            map.put(payload.getName(), payload.getValue());
+            map.put(payload.getValue(), payload.getName());
         }
         return map;
     }
@@ -54,15 +54,37 @@ public class CarServiceImpl implements CarService, Transfer {
     }
 
     @Override
-    public Map<String, Object> getCarModels(int id) {
+    public Map<String, Object> getCarModels(int markId) {
         Map<String, Object> model = new HashMap<>();
-        model.put(PAYLOADS, getModelsCache(id));
-        model.put(URL_PART, "/car/mark/" + id);
+        model.put(PAYLOADS, getModelsCache(markId));
+        model.put(URL_PART, "/car/mark/" + markId);
         return model;
     }
 
-    private Payload[] getModelsCache(int id) {
-        String url = urlBuilder.getModels(DEFAULT_CATEGORY, id);
+    @Override
+    public Map<String, Object> getModelStatistic(int markId, int modelId) {
+        String url = urlBuilder.getAvarege(DEFAULT_CATEGORY, markId, modelId);
+        Statistic statistic = restTemplate.getForObject(url, Statistic.class);
+        Map<String, Object> model = new HashMap<>();
+        model.put(STATISTIC, statistic);
+        String urlPart = "https://auto.ria.com/auto_" +
+                getMarksMap().get(markId) + "_" +
+                CAR_MODELS.get(modelId) + "_";
+        Map<Integer, String> table = getStatTableMap(statistic, urlPart.toLowerCase());
+        model.put(TABLE, table);
+        return model;
+    }
+
+    private Map<Integer, String> getStatTableMap(Statistic statistic, String urlPart) {
+        Map<Integer, String> table = new TreeMap<Integer, String>();
+        for (Map.Entry<Integer, Integer> entry : statistic.buildMap().entrySet()) {
+            table.put(entry.getKey(), urlPart + entry.getValue() + ".html");
+        }
+        return table;
+    }
+
+    private Payload[] getModelsCache(int markId) {
+        String url = urlBuilder.getModels(DEFAULT_CATEGORY, markId);
         Payload[] payloads = restTemplate.getForObject(url, Payload[].class);
         for (Payload payload : payloads) {
             CAR_MODELS.put(payload.getValue(), payload.getName());
