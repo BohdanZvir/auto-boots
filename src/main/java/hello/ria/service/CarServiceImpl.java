@@ -75,6 +75,24 @@ public class CarServiceImpl implements CarService, Transfer {
         return model;
     }
 
+    @Override
+    public Map<String, ?> getStatistic(int markId, int modelId) {
+        String url = urlBuilder.getAvarege(DEFAULT_CATEGORY, markId, modelId);
+        Statistic statistic = restTemplate.getForObject(url, Statistic.class);
+        Map<String, Object> model = new HashMap<>();
+        model.put(JSON_VALUE, statistic);
+        return model;
+    }
+
+    @Override
+    public Map<String, ?> getOptions() {
+        String url = urlBuilder.getOptions(1);
+        Payload[] payloads = restTemplate.getForObject(url, Payload[].class);
+        Map<String, Object> model = new HashMap<>();
+        model.put(PAYLOADS, payloads);
+        return model;
+    }
+
     private Map<Integer, String> getStatTableMap(Statistic statistic, String urlPart) {
         Map<Integer, String> table = new TreeMap<Integer, String>();
         for (Map.Entry<Integer, Integer> entry : statistic.buildMap().entrySet()) {

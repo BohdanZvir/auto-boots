@@ -7,11 +7,15 @@ import java.util.Map;
  */
 public interface CarService {
 
-    Map<String, Object> getModelsMap();
+    Map<String, ?> getModelsMap();
 
-    Map<String, Object> getCategories();
+    Map<String, ?> getCategories();
 
-    Map<String, Object> getCarModels(int id);
+    Map<String, ?> getCarModels(int id);
 
-    Map<String, Object> getModelStatistic(int markId, int modelId);
+    Map<String, ?> getModelStatistic(int markId, int modelId);
+
+    Map<String, ?> getStatistic(int markId, int modelId);
+
+    Map<String, ?> getOptions();
 }

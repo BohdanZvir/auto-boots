@@ -1,8 +1,6 @@
 package hello;
 
 import hello.ria.communicator.UrlBuilder;
-import hello.ria.model.Payload;
-import hello.ria.model.Statistic;
 import hello.ria.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,16 +53,16 @@ public class GreetingController implements Transfer {
 
     @RequestMapping("/car/options")
     public String carOptions(Model model) {
-        model.addAttribute(PAYLOADS, restTemplate.getForObject(urlBuilder.getOptions(1), Payload[].class));
+        model.addAllAttributes(carService.getOptions());
         return PAYLD_PAGE;
     }
     
     @RequestMapping("/car/table")
     public String carTable(@RequestParam(value="narrow", defaultValue= "true") boolean narrow,
                            @RequestParam(value="mark", defaultValue= "55") int mark,
-                           @RequestParam(value="car_model"/*, defaultValue= "55"*/) int car_model,
+                           @RequestParam(value="car_model"/*, defaultValue= "55"*/) int modelId,
                            Model model) {
-        model.addAttribute(JSON_VALUE, restTemplate.getForObject(urlBuilder.getAvarege(1, mark, car_model), Statistic.class));
+        model.addAllAttributes(carService.getStatistic(mark, modelId));
         return PAYLD_PAGE;
     }
 }
