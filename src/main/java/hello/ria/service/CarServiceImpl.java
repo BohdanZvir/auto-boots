@@ -23,6 +23,8 @@ public class CarServiceImpl implements CarService, Transfer {
     private UrlBuilder urlBuilder;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private DataExtractor extractor;
 
     @Override
     public Map<String, Object> getModelsMap() {
@@ -86,7 +88,7 @@ public class CarServiceImpl implements CarService, Transfer {
 
     @Override
     public Map<String, ?> getOptions() {
-        String url = urlBuilder.getOptions(1);
+        String url = urlBuilder.getOptions(DEFAULT_CATEGORY);
         Payload[] payloads = restTemplate.getForObject(url, Payload[].class);
         Map<String, Object> model = new HashMap<>();
         model.put(PAYLOADS, payloads);
@@ -116,5 +118,9 @@ public class CarServiceImpl implements CarService, Transfer {
             CAR_MARKS.addAll(Arrays.asList(restTemplate.getForObject(url, Payload[].class)));
         }
         return CAR_MARKS;
+    }
+
+    public Map<String, ?> getCarData(String url){
+        return extractor.getCarData(url);
     }
 }
