@@ -1,5 +1,7 @@
 package hello.ria.service;
 
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -10,6 +12,7 @@ import java.util.Map;
 /**
  * Created by bohdan on 05.02.16.
  */
+@Service
 public class DataExtractorImpl implements DataExtractor {
 
     @Override
