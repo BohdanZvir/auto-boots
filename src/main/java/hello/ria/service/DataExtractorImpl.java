@@ -22,17 +22,21 @@ public class DataExtractorImpl implements DataExtractor {
 
     public static final String DESCRIPTION = "#description";
     public static final String DESC1 = "#final_page__main_info_block > div.span5 > div > div > section:nth-child(10) > div.title.bold";
+    public static final String TRANSMISSION = "#final_page__main_info_block > div.span5 > div > div > section:nth-child(10) > div.box-panel.rocon > dl > dd:nth-child(2) > strong";
 
     @Override
     public Map<String, ?> getCarData(String html) {
         Map<String, Object> carData = new HashMap<>();
         Document doc = Jsoup.parse(html);
-        Elements links = doc.select(DESCRIPTION);
+        Elements links = doc.select(DESC1);
         System.out.println("\n\n" +links.text() + "\n");
 
         carData.put(DESCRIPTION, links.text());
-        Elements desc1 = doc.select(DESC1);
-        Elements desc2 = doc.select(DESC1);
+        Elements desc = doc.select(DESC1);
+        System.out.println(desc);
+
+        Elements trans = doc.select(TRANSMISSION);
+        System.out.println(trans);
         Elements desc3 = doc.select(DESC1);
         return carData;
     }
