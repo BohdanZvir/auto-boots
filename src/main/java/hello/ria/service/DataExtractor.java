@@ -1,13 +1,13 @@
 package hello.ria.service;
 
+import hello.ria.model.SelectorProps;
+
 import java.util.Map;
 
 /**
  * Created by bohdan on 05.02.16.
  */
 public interface DataExtractor {
-    String DESCRIPTION = "Description";
-    Map<String,?> getCarData(String url);
-//    Map<String, ?> getCarData(Environment env, String html);
+    Map<SelectorProps,?> getCarData(String url);
     String callURL(String textUrl);
 }

@@ -26,8 +26,8 @@ public class DataExtractorImplTest {
     @Test
     public void getCarData() throws Exception {
         String html = extractor.callURL("https://auto.ria.com/auto_hyundai_i30%20_16876216.html");
-        Map<String, ?> carData = extractor.getCarData(html);
-        for (Map.Entry<String, ?> entry : carData.entrySet()){
+        Map<SelectorProps, ?> carData = extractor.getCarData(html);
+        for (Map.Entry<SelectorProps, ?> entry : carData.entrySet()){
             System.out.printf("\n %s : %s \n\n", entry.getKey(), entry.getValue());
         }
         assertNotNull(carData);

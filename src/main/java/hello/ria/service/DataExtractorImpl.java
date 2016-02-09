@@ -27,13 +27,13 @@ public class DataExtractorImpl implements DataExtractor {
     private Environment env;
 
     @Override
-    public Map<String, ?> getCarData( String html) {
-        Map<String, Object> carData = new HashMap<>();
+    public Map<SelectorProps, Object> getCarData(String html) {
+        Map<SelectorProps, Object> carData = new HashMap<>();
         Document doc = Jsoup.parse(html);
         for (SelectorProps prop : SelectorProps.values()) {
             String value = env.getProperty(prop.getKey());
             Elements trans = doc.select(value);
-            carData.put(prop.toString(), trans.text());
+            carData.put(prop, trans.text());
         }
         return carData;
     }
