@@ -1,6 +1,7 @@
 package hello.ria.service;
 
 import hello.Application;
+import hello.ria.model.SelectorProps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Map;
 
-import static hello.ria.service.DataExtractor.DESCRIPTION;
 import static org.junit.Assert.*;
 
 /**
@@ -27,10 +27,13 @@ public class DataExtractorImplTest {
     public void getCarData() throws Exception {
         String html = extractor.callURL("https://auto.ria.com/auto_hyundai_i30%20_16876216.html");
         Map<String, ?> carData = extractor.getCarData(html);
+        for (Map.Entry<String, ?> entry : carData.entrySet()){
+            System.out.printf("\n %s : %s \n\n", entry.getKey(), entry.getValue());
+        }
         assertNotNull(carData);
         assertFalse(carData.isEmpty());
-        assertTrue(carData.containsKey(DESCRIPTION));
-        Object desc = carData.get(DESCRIPTION);
+        assertTrue(carData.containsKey(SelectorProps.DESCRIPTION));
+        Object desc = carData.get(SelectorProps.DESCRIPTION);
         assertNotNull(desc);
     }
 

@@ -1,8 +1,11 @@
 package hello.ria.service;
 
+import hello.ria.model.SelectorProps;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -20,29 +23,22 @@ import java.util.Map;
 @Service
 public class DataExtractorImpl implements DataExtractor {
 
-    public static final String DESCRIPTION = "#description";
-    public static final String DESC1 = "#final_page__main_info_block > div.span5 > div > div > section:nth-child(10) > div.title.bold";
-    public static final String TRANSMISSION = "#final_page__main_info_block > div.span5 > div > div > section:nth-child(10) > div.box-panel.rocon > dl > dd:nth-child(2) > strong";
+    @Autowired
+    private Environment env;
 
     @Override
-    public Map<String, ?> getCarData(String html) {
+    public Map<String, ?> getCarData( String html) {
         Map<String, Object> carData = new HashMap<>();
         Document doc = Jsoup.parse(html);
-        Elements links = doc.select(DESC1);
-        System.out.println("\n\n" +links.text() + "\n");
-
-        carData.put(DESCRIPTION, links.text());
-        Elements desc = doc.select(DESC1);
-        System.out.println(desc);
-
-        Elements trans = doc.select(TRANSMISSION);
-        System.out.println(trans);
-        Elements desc3 = doc.select(DESC1);
+        for (SelectorProps prop : SelectorProps.values()) {
+            String value = env.getProperty(prop.getKey());
+            Elements trans = doc.select(value);
+            carData.put(prop.toString(), trans.text());
+        }
         return carData;
     }
 
     public String callURL(String textUrl) {
-//        System.out.println("Requeted URL:" + textUrl);
         StringBuilder response = new StringBuilder();
         URLConnection urlConn;
         try {
@@ -70,4 +66,6 @@ public class DataExtractorImpl implements DataExtractor {
 
         return response.toString();
     }
+
+
 }

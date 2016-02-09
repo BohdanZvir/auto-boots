@@ -120,7 +120,7 @@ public class CarServiceImpl implements CarService, Transfer {
         return CAR_MARKS;
     }
 
-    public Map<String, ?> getCarData(String url){
-        return extractor.getCarData(url);
-    }
+//    public Map<String, ?> getCarData(String url){
+//        return extractor.getCarData(url);
+//    }
 }

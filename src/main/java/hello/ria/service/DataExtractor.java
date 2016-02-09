@@ -8,5 +8,6 @@ import java.util.Map;
 public interface DataExtractor {
     String DESCRIPTION = "Description";
     Map<String,?> getCarData(String url);
+//    Map<String, ?> getCarData(Environment env, String html);
     String callURL(String textUrl);
 }
