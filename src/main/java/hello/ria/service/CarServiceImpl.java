@@ -3,6 +3,7 @@ package hello.ria.service;
 import hello.Transfer;
 import hello.ria.communicator.UrlBuilder;
 import hello.ria.model.Payload;
+import hello.ria.model.SelectorProps;
 import hello.ria.model.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,8 +73,10 @@ public class CarServiceImpl implements CarService, Transfer {
         String urlPart = "https://auto.ria.com/auto_" +
                 getMarksMap().get(markId) + "_" +
                 CAR_MODELS.get(modelId) + "_";
-        Map<Integer, String> table = getStatTableMap(statistic, urlPart.toLowerCase());
+        String adsUrl = urlPart.toLowerCase();
+        Map<Integer, String> table = getStatTableMap(statistic, adsUrl);
         model.put(TABLE, table);
+        model.put("content", getCarData(adsUrl));
         return model;
     }
 
@@ -120,7 +123,7 @@ public class CarServiceImpl implements CarService, Transfer {
         return CAR_MARKS;
     }
 
-//    public Map<String, ?> getCarData(String url){
-//        return extractor.getCarData(url);
-//    }
+    public Map<SelectorProps, ?> getCarData(String url){
+        return extractor.getCarData(url);
+    }
 }
