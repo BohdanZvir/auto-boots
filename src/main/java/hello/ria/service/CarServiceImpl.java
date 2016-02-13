@@ -3,7 +3,6 @@ package hello.ria.service;
 import hello.Transfer;
 import hello.ria.communicator.UrlBuilder;
 import hello.ria.model.Payload;
-import hello.ria.model.SelectorProps;
 import hello.ria.model.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,9 +73,9 @@ public class CarServiceImpl implements CarService, Transfer {
                 getMarksMap().get(markId) + "_" +
                 CAR_MODELS.get(modelId) + "_";
         String adsUrl = urlPart.toLowerCase();
-        Map<Integer, String> table = getStatTableMap(statistic, adsUrl);
+        Map<Integer, ?> table = getStatTableMap(statistic, adsUrl);
         model.put(TABLE, table);
-        model.put(CONTENT, getCarData(adsUrl));
+        model.put(CONTENT, adsUrl);
         return model;
     }
 
@@ -98,10 +97,14 @@ public class CarServiceImpl implements CarService, Transfer {
         return model;
     }
 
-    private Map<Integer, String> getStatTableMap(Statistic statistic, String urlPart) {
-        Map<Integer, String> table = new TreeMap<Integer, String>();
+    private Map<Integer, ?> getStatTableMap(Statistic statistic, String urlPart) {
+        Map<Integer, Map<String, String>> table = new TreeMap<>();
         for (Map.Entry<Integer, Integer> entry : statistic.buildMap().entrySet()) {
-            table.put(entry.getKey(), urlPart + entry.getValue() + ".html");
+            String adUrl = urlPart + entry.getValue() + ".html";
+
+            Map<String, String> carData = extractor.getCarData(adUrl);
+            carData.put(URL, adUrl);
+            table.put(entry.getKey(), carData);
         }
         return table;
     }
@@ -123,7 +126,4 @@ public class CarServiceImpl implements CarService, Transfer {
         return CAR_MARKS;
     }
 
-    public Map<SelectorProps, ?> getCarData(String url){
-        return extractor.getCarData(url);
-    }
 }

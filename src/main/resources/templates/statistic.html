@@ -22,7 +22,13 @@ prices
     <tr th:each="entry : ${table}">
 
         <td>
-            <a th:text="${entry.key}" th:href="${entry.value}"></a>
+            <a th:text="${entry.key}" th:href="${entry.value.url}"></a>
+        </td>
+        <td th:each="desc : ${entry.value}">
+            <ul>
+                <li th:text="${desc.key}"></li>
+                <li th:text="${desc.value}"></li>
+            </ul>
         </td>
     </tr>
     </tbody>

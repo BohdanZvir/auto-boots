@@ -20,20 +20,20 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(Application.class)
 public class DataExtractorImplTest {
 
+    public static final String URL = "https://auto.ria.com/auto_hyundai_i30%20_16876216.html";
     @Autowired
     private DataExtractor extractor;
 
     @Test
     public void getCarData() throws Exception {
-        String html = extractor.callURL("https://auto.ria.com/auto_hyundai_i30%20_16876216.html");
-        Map<SelectorProps, ?> carData = extractor.getCarData(html);
-        for (Map.Entry<SelectorProps, ?> entry : carData.entrySet()){
+        Map<String, ?> carData = extractor.getCarData(URL);
+        for (Map.Entry<String, ?> entry : carData.entrySet()){
             System.out.printf(" %s : %s \n", entry.getKey(), entry.getValue());
         }
         assertNotNull(carData);
         assertFalse(carData.isEmpty());
-        assertTrue(carData.containsKey(SelectorProps.DESCRIPTION));
-        Object desc = carData.get(SelectorProps.DESCRIPTION);
+        assertTrue(carData.containsKey(SelectorProps.DESCRIPTION.toString()));
+        Object desc = carData.get(SelectorProps.DESCRIPTION.toString());
         assertNotNull(desc);
     }
 

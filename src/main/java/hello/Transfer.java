@@ -23,4 +23,5 @@ public interface Transfer {
     String OPTIONS = "options";
     String GEARBOXES = "gearboxes";
     String CONTENT = "content";
+    String URL = "url";
 }
