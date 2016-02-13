@@ -5,19 +5,19 @@ package hello.ria.model;
  */
 public enum SelectorProps {
 
-    TRANSMISSION,
     MARK_MODEL,
-    FUEL,
-    ENG_VOLUME,
-    COMFORT,
-    SAFETY,
-    STATE,
-    DESCRIPTION,
     PRICE,
     RUN,
+    FUEL,
+    ENG_VOLUME,
+    CITY,
+    TRANSMISSION,
+    COMFORT,
+    SAFETY,
+    DESCRIPTION,
+    STATE,
     SELLER,
     PHONE_NUMBER,
-    CITY,
     ADS_COUNTS,
     ADS_DATE,
     ADS_ID;

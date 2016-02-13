@@ -21,7 +21,7 @@ public class Statistic {
     private int[] prices;
     private Map<String, Integer> percentiles;
     private int[] classifieds;
-    
+
     public Map<Integer, Integer> buildMap() {
         Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < prices.length; i++ ){

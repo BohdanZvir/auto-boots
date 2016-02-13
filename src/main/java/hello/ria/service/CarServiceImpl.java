@@ -76,7 +76,7 @@ public class CarServiceImpl implements CarService, Transfer {
         String adsUrl = urlPart.toLowerCase();
         Map<Integer, String> table = getStatTableMap(statistic, adsUrl);
         model.put(TABLE, table);
-        model.put("content", getCarData(adsUrl));
+        model.put(CONTENT, getCarData(adsUrl));
         return model;
     }
 

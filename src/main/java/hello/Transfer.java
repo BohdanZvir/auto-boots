@@ -22,4 +22,5 @@ public interface Transfer {
     String CITIES = "cities";
     String OPTIONS = "options";
     String GEARBOXES = "gearboxes";
+    String CONTENT = "content";
 }

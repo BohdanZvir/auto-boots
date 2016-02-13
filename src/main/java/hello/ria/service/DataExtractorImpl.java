@@ -14,7 +14,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -28,7 +28,7 @@ public class DataExtractorImpl implements DataExtractor {
 
     @Override
     public Map<SelectorProps, Object> getCarData(String html) {
-        Map<SelectorProps, Object> carData = new HashMap<>();
+        Map<SelectorProps, Object> carData = new LinkedHashMap<>();
         Document doc = Jsoup.parse(html);
         for (SelectorProps prop : SelectorProps.values()) {
             String value = env.getProperty(prop.getKey());
