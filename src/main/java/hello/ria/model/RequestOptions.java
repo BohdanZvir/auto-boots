@@ -5,9 +5,19 @@ package hello.ria.model;
  */
 public enum RequestOptions {
 
-    DAMAGE;
-    
+    DAMAGE,
+    CUSTOM,
+    GEAR,
+    RUN,
+    YEARS,
+    FUEL
+    ;
+
     public String getKey() {
         return "request.options." + this.toString().toLowerCase();
+    }
+
+    public String getName() {
+        return getKey() + ".name";
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 @Controller
 public class GreetingController implements Transfer {
 
-    private Map<String,Integer> options;
+    private Map<String,String> options;
     @Autowired
     private CarService carService;
     @Autowired
@@ -27,9 +27,19 @@ public class GreetingController implements Transfer {
     public void init() {
         options = new LinkedHashMap<>();
         for (RequestOptions prop : RequestOptions.values()) {
-            Integer value = env.getProperty(prop.getKey(), Integer.class);
-            options.put(prop.toString(), value);
-            System.out.println("!!!!!!!!!!!!!!" + prop.toString() + " :: " + value);
+            String value = env.getProperty(prop.getKey());
+            String name = env.getProperty(prop.getName());
+            if (name==null || name.isEmpty()) {
+                name = prop.toString().toLowerCase();
+            }
+            if (value.contains(",")) {
+                String[] res = value.split(",");
+                String superValue = res[0] + "&" + name + "=" + res[1];
+                options.put(name,superValue);
+            } else {
+                options.put(name, value);
+            }
+            System.out.println("!!!!!!!!!!!!!!" + name + " :: " + value);
         }
     }
 
