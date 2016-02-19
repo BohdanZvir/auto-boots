@@ -1,24 +1,37 @@
 package hello;
 
-import hello.ria.communicator.UrlBuilder;
+import hello.ria.model.RequestOptions;
 import hello.ria.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.PostConstruct;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Controller
 public class GreetingController implements Transfer {
 
-    @Autowired
-    private UrlBuilder urlBuilder;
-    @Autowired
-    private RestTemplate restTemplate;
+    private Map<String,Integer> options;
     @Autowired
     private CarService carService;
+    @Autowired
+    private Environment env;
+
+    @PostConstruct
+    public void init() {
+        options = new LinkedHashMap<>();
+        for (RequestOptions prop : RequestOptions.values()) {
+            Integer value = env.getProperty(prop.getKey(), Integer.class);
+            options.put(prop.toString(), value);
+            System.out.println("!!!!!!!!!!!!!!" + prop.toString() + " :: " + value);
+        }
+    }
 
     @RequestMapping("/")
     public String index(Model model) {
