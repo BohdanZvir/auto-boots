@@ -1,9 +1,8 @@
 package hello;
 
-import hello.ria.model.RequestOptions;
 import hello.ria.service.CarService;
+import hello.ria.service.SearchStateConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
@@ -21,26 +19,11 @@ public class GreetingController implements Transfer {
     @Autowired
     private CarService carService;
     @Autowired
-    private Environment env;
+    private SearchStateConfigurer stateConfigurer;
 
     @PostConstruct
     public void init() {
-        options = new LinkedHashMap<>();
-        for (RequestOptions prop : RequestOptions.values()) {
-            String value = env.getProperty(prop.getKey());
-            String name = env.getProperty(prop.getName());
-            if (name==null || name.isEmpty()) {
-                name = prop.toString().toLowerCase();
-            }
-            if (value.contains(",")) {
-                String[] res = value.split(",");
-                String superValue = res[0] + "&" + name + "=" + res[1];
-                options.put(name,superValue);
-            } else {
-                options.put(name, value);
-            }
-            System.out.println("!!!!!!!!!!!!!!" + name + " :: " + value);
-        }
+        options = stateConfigurer.getDefaultOptions();
     }
 
     @RequestMapping("/")
