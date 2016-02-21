@@ -1,5 +1,6 @@
 package hello.ria.service;
 
+import hello.ria.AbstractBaseTest;
 import hello.ria.dao.Advertise;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
