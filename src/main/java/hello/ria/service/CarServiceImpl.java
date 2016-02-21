@@ -64,8 +64,11 @@ public class CarServiceImpl implements CarService, Transfer {
     }
 
     @Override
-    public Map<String, Object> getModelStatistic(int markId, int modelId) {
-        String url = urlBuilder.getAvarege(DEFAULT_CATEGORY, markId, modelId);
+    public Map<String, Object> getModelStatistic(String markId, String modelId, Map<String, String> options) {
+        options.put(MARKS, markId);
+        options.put(MODELS, modelId);
+        options.put(CATEGORIES, DEFAULT_CATEGORY+ "");
+        String url = urlBuilder.getAvarege(options);
         Statistic statistic = restTemplate.getForObject(url, Statistic.class);
         Map<String, Object> model = new HashMap<>();
         model.put(STATISTIC, statistic);

@@ -50,10 +50,10 @@ public class GreetingController implements Transfer {
     }
 
     @RequestMapping("/car/mark/{mark_id}/{model_id}")
-    public String carStat(@PathVariable("mark_id") int markId,
-                          @PathVariable("model_id") int modelId,
+    public String carStat(@PathVariable("mark_id") String markId,
+                          @PathVariable("model_id") String modelId,
                           Model model){
-        model.addAllAttributes(carService.getModelStatistic(markId, modelId));
+        model.addAllAttributes(carService.getModelStatistic(markId, modelId, options));
         return STAT_PAGE;
     }
 

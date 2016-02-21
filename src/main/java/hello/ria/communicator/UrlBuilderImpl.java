@@ -37,6 +37,19 @@ public class UrlBuilderImpl implements UrlBuilder, Transfer {
     }
 
     @Override
+    public String getAvarege(Map<String, String> options) {
+
+        String result = getAvarege(
+                new Integer(options.remove(CATEGORIES)),
+                new Integer(options.remove(MARKS)),
+                new Integer(options.remove(MODELS)));
+        for (Map.Entry<String, String> entry : options.entrySet()) {
+            result += "&"+entry.getKey() + "="+entry.getValue();
+        }
+        return result;
+    }
+
+    @Override
     public String getOptions(int category) {
         return buildUrl(CATEGORIES, category, OPTIONS);
     }

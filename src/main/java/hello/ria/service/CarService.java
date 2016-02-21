@@ -13,7 +13,7 @@ public interface CarService {
 
     Map<String, ?> getCarModels(int id);
 
-    Map<String, ?> getModelStatistic(int markId, int modelId);
+    Map<String, ?> getModelStatistic(String markId, String modelId, Map<String, String> options);
 
     Map<String, ?> getStatistic(int markId, int modelId);
 
