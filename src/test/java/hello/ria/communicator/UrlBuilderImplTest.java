@@ -3,6 +3,8 @@ package hello.ria.communicator;
 import hello.ria.AbstractBaseTest;
 import hello.ria.service.SearchStateConfigurer;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -14,6 +16,9 @@ import static org.junit.Assert.assertNotNull;
  * Created by bohdan on 21.02.16.
  */
 public class UrlBuilderImplTest extends AbstractBaseTest {
+
+//    private Logger logger = LoggerFactory.getLogger(UrlBuilderImplTest.class);
+
 
     @Autowired
     private UrlBuilder urlBuilder;
@@ -37,6 +42,7 @@ public class UrlBuilderImplTest extends AbstractBaseTest {
         options.put(CATEGORIES, DEFAULT_CATEGORY + "");
         String avarege = urlBuilder.getAvarege(options);
         System.out.println("\n\n" + avarege + "\n");
+//        logger.debug("Testing !! {}", avarege);
         assertNotNull(avarege);
         assertFalse(avarege.isEmpty());
     }

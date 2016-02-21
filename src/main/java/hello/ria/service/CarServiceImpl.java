@@ -73,8 +73,8 @@ public class CarServiceImpl implements CarService, Transfer {
         Map<String, Object> model = new HashMap<>();
         model.put(STATISTIC, statistic);
         String urlPart = "https://auto.ria.com/auto_" +
-                getMarksMap().get(markId) + "_" +
-                CAR_MODELS.get(modelId) + "_";
+                getMarksMap().get(new Integer(markId)) + "_" +
+                CAR_MODELS.get(new Integer(modelId)) + "_";
         String adsUrl = urlPart.toLowerCase();
         Map<Integer, ?> table = getStatTableMap(statistic, adsUrl);
         model.put(TABLE, table);
